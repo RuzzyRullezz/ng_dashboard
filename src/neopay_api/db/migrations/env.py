@@ -21,6 +21,7 @@ from neopay_api.config import DB_DSN
 from neopay_api.db.base import Base
 
 config.set_main_option("sqlalchemy.url", str(DB_DSN))
+Base.discover()
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
