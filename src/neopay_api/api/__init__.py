@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
+from neopay_api import config
 from neopay_api.core.logging.incoming_request_log.middleware import LogMiddleware
 from neopay_api.api import middlewares, errors, routing
 
 
 def init_app():
-    # config.setup_logging()
     title = 'NEOPAY API'
     application = FastAPI(title=title)
     # middlwares
@@ -20,4 +20,5 @@ def init_app():
     return application
 
 
+config.setup_logging()
 app = init_app()

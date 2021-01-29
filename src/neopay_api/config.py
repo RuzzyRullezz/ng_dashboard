@@ -5,7 +5,8 @@ from sqlalchemy.engine.url import URL, make_url
 from starlette.config import Config
 from starlette.datastructures import Secret
 
-# from . import loggers
+from . import loggers
+
 
 config_path = pathlib.Path(__file__).parent.absolute() / ".env"
 config = Config(str(config_path))
@@ -46,10 +47,8 @@ DB_RETRY_LIMIT = config("DB_RETRY_LIMIT", cast=int, default=1)
 DB_RETRY_INTERVAL = config("DB_RETRY_INTERVAL", cast=int, default=1)
 
 
-# # Logging
-# TG_TOKEN = config("TG_TOKEN", cast=str, default=None)
-# TG_CHAT = config("TG_CHAT", cast=int, default=None)
-# SENTRY_DSN = config("SENTRY_DSN", cast=str, default=None)
-# setup_logging = functools.partial(loggers.setup, tg_token=TG_TOKEN, tg_chat=TG_CHAT, sentry_dsn=SENTRY_DSN)
-
-
+# Logging
+TG_TOKEN = config("TG_TOKEN", cast=str, default=None)
+TG_CHAT = config("TG_CHAT", cast=int, default=None)
+SENTRY_DSN = config("SENTRY_DSN", cast=str, default=None)
+setup_logging = functools.partial(loggers.setup, tg_token=TG_TOKEN, tg_chat=TG_CHAT, sentry_dsn=SENTRY_DSN)
