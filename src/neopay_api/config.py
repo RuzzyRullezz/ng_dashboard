@@ -1,3 +1,4 @@
+import datetime
 import functools
 import pathlib
 
@@ -46,9 +47,13 @@ DB_USE_CONNECTION_FOR_REQUEST = config(
 DB_RETRY_LIMIT = config("DB_RETRY_LIMIT", cast=int, default=1)
 DB_RETRY_INTERVAL = config("DB_RETRY_INTERVAL", cast=int, default=1)
 
-
 # Logging
 TG_TOKEN = config("TG_TOKEN", cast=str, default=None)
 TG_CHAT = config("TG_CHAT", cast=int, default=None)
 SENTRY_DSN = config("SENTRY_DSN", cast=str, default=None)
 setup_logging = functools.partial(loggers.setup, tg_token=TG_TOKEN, tg_chat=TG_CHAT, sentry_dsn=SENTRY_DSN)
+
+# Auth
+SECRET_KEY = config("SECRET_KEY", cast=str, default="060e751fcdd6a203ef39e2563ebe60fec39fed9d4043081e3a15a8278be972f8")
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_INTERVAL = datetime.timedelta(days=365)

@@ -15,3 +15,4 @@ class Base:
     @classmethod
     def discover(cls):
         from neopay_api.core.logging.incoming_request_log import models as incoming_request_log_models
+        from neopay_api.core.users import models as users_models

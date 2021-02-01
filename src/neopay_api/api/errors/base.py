@@ -6,7 +6,7 @@ from pydantic.main import BaseModel
 
 
 class ApiError(BaseModel):
-    code: int
+    code: str
     detail: str
 
     def as_api_exception(self, status_code: int) -> ApiErrorException:

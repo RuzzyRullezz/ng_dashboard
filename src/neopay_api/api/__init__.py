@@ -11,7 +11,7 @@ def init_app():
     application = FastAPI(title=title)
     # middlwares
     application.add_middleware(CORSMiddleware, **middlewares.cors_middleware_params)
-    application.add_middleware(LogMiddleware,)
+    application.add_middleware(LogMiddleware)
     # exception handlers (as middlewares)
     application.add_exception_handler(errors.ApiErrorException, errors.api_error_exception_handler)
     # urls

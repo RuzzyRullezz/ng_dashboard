@@ -14,27 +14,39 @@ class LogMiddleware(BaseHTTPMiddleware):
     request_patched: bool = False
 
     @classmethod
-    def patch_request_body(cls):
+    def patch_request(cls):
         if cls.request_patched:
             return
 
-        body_original = Request.body
+        stream_original = Request.stream
 
-        async def body_patched(request: Request):
-            body_content_key = 'body_content'
-            body_content = request.scope.get(body_content_key)
-            if body_content:
-                return body_content
-            body_content = await body_original(request)
-            request.scope[body_content_key] = body_content
-            return body_content
+        async def stream_full(request: Request):
+            all_chunks = []
+            async for chunk in request.stream():
+                all_chunks.append(chunk)
+            return b''.join(all_chunks)
 
-        Request.body = body_patched
+        async def stream_patched(request: Request):
+            stream_content_key = 'stream_content_key'
+            stream_content = request.scope.get(stream_content_key)
+            if stream_content is not None:
+                yield stream_content
+                return
+            else:
+                stream_content = b''
+                async for chunk in stream_original(request):
+                    yield chunk
+                    stream_content += chunk
+                request.scope[stream_content_key] = stream_content
+            yield b''
+
+        Request.stream = stream_patched
+        Request.stream_full = stream_full
         cls.request_patched = True
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.patch_request_body()
+        self.patch_request()
 
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
         request_datetime = utc_now()

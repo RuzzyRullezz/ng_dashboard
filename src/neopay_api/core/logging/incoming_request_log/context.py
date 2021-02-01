@@ -61,7 +61,7 @@ class LogContext:
         log_context.request_headers = {}
         for k, v in request.headers.items():
             log_context.request_headers[k] = v
-        log_context.request_body = await request.body()
+        log_context.request_body = await request.stream_full() if hasattr(request, 'stream_full') else None
         log_context.response_datetime = response_datetime
         log_context.elapsed_time = response_datetime - request_datetime
         if response is not None:

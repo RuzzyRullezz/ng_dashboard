@@ -15,6 +15,11 @@ sentry-sdk = "^0.19.5"
 raven = "^6.10.0"
 pytz = "^2020.5"
 uvicorn = "^0.13.3"
+SQLAlchemy-Utils = "^0.36.8"
+python-jose = "^3.2.0"
+passlib = "^1.7.4"
+bcrypt = "^3.2.0"
+python-multipart = "^0.0.5"
 
 [tool.poetry.dev-dependencies]
 
