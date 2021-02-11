@@ -8,6 +8,7 @@ from neopay_api.core.users.models import User, UserTypeEnum
 from neopay_api.core.users import store as users_store
 from neopay_api.core.users.profiles import store as profiles_store
 from neopay_api.core.users.auth import verify_password, oauth2_scheme, TokenPayload
+from neopay_api.core.users.store import UserData
 from neopay_api.db.session import get_db_local_session
 from neopay_api.db.session_pool import SessionPool
 from sqlalchemy.orm import Session
@@ -46,9 +47,10 @@ def cli_create_user():
         raise NotImplementedError(f"Unsupported user_type {user_type}")
     profile_data_cls = profiles_store.get_profile_data_cls(user_type)
     profile_data = profile_data_cls(**profile_data_dict)
+    user_data = UserData(login=login, password=password, user_type=user_type)
     db_session = SessionPool()
     try:
-        users_store.create_user(db_session, login, password, user_type, profile_data)
+        users_store.create_user_full(db_session, user_data, profile_data)
     finally:
         db_session.close()
 
