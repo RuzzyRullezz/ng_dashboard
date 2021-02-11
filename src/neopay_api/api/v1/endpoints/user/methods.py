@@ -18,6 +18,7 @@ router = APIRouter()
 @router.post(
     "/login/",
     tags=["Users"],
+    response_model=Token,
     operation_id="login",
 )
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db_session: Session = Depends(get_db_local_session)):
