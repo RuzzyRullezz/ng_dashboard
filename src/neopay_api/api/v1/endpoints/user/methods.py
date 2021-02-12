@@ -41,5 +41,6 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db_session: Session 
 def user_info(user: User = Depends(manager.user_from_request)):
     return UserInfoResponse(
         login=user.login,
+        type=user.type,
         created_at=user.created_at,
     )
