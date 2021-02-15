@@ -4,7 +4,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from neopay_api.core.users import manager
 from neopay_api.core.users.auth import create_access_token
 from neopay_api.core.users.models import User
-from neopay_api.db.session import get_db_local_session, SessionLocal
+from neopay_api.db.session import get_db_local_session
 from sqlalchemy.orm import Session
 from starlette import status
 

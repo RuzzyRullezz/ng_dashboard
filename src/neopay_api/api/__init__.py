@@ -15,7 +15,7 @@ def init_app():
     # exception handlers (as middlewares)
     application.add_exception_handler(errors.ApiErrorException, errors.api_error_exception_handler)
     # urls
-    application.include_router(routing.root_router, prefix='')
+    application.include_router(routing.root_router, prefix='/api')
     # return
     return application
 
