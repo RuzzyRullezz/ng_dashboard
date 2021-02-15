@@ -12,7 +12,7 @@ def init_app():
     # middlwares
     application.add_middleware(CORSMiddleware, **middlewares.cors_middleware_params)
     application.add_middleware(LogMiddleware)
-    # exception handlers (as middlewares)
+    # set exceptions handler
     application.add_exception_handler(errors.ApiErrorException, errors.api_error_exception_handler)
     # urls
     application.include_router(routing.root_router, prefix='/api')
